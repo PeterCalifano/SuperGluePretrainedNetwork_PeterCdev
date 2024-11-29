@@ -1,0 +1,1 @@
+./demo_superglue.py --input input_pairs --output_dir output_demo --resize 512 512 --superglue outdoor

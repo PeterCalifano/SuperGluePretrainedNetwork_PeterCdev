@@ -1,0 +1,1 @@
+./match_pairs.py --resize 1024 --superglue outdoor --max_keypoints 2048 --nms_radius 3 --resize_float --input_dir input_pairs --output_dir output_pairs
