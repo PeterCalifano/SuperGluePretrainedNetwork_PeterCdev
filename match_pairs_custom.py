@@ -130,9 +130,9 @@ def main():
 
             if do_ransac_essential:
 
-                matches_path = output_dir_ransac / \
+                matches_path_ransac = output_dir_ransac / \
                     '{}_{}_matches_ransac.npz'.format(stem0, stem1)
-                viz_path = output_dir_ransac / \
+                viz_path_ransac = output_dir_ransac / \
                     '{}_{}_matches_ransac.png'.format(stem0, stem1)
 
                 # Extract keypoints coordinates from matches
@@ -156,7 +156,7 @@ def main():
                 out_matches_inliers = {'keypoints0': kpts0_ransac, 'keypoints1': kpts1_ransac,
                                        'matches': inlier_matches, 'match_confidence': match_confidences_ransac}
                 
-                np.savez(str(output_dir_ransac), **out_matches_inliers)
+                np.savez(str(matches_path_ransac), **out_matches_inliers)
 
         # Keep the matching keypoints.
         valid = matches > -1
@@ -211,7 +211,7 @@ def main():
 
                 make_matching_plot(
                     image0, image1, kpts0, kpts1, mkpts0_ransac, mkpts1_ransac, color_ransac,
-                    text_ransac, viz_path, show_keypoints,
+                    text_ransac, viz_path_ransac, show_keypoints,
                     use_fast_viz, display_ocv, 'Matches RANSAC', small_text)
 
                 timer.update('viz_match_ransac')
