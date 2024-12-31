@@ -13,7 +13,7 @@ from models.utils import (compute_pose_error, compute_epipolar_error,
                           error_colormap, AverageTimer, pose_auc, read_image,
                           rotate_intrinsics, rotate_pose_inplane,
                           scale_intrinsics)
-from pyTorchAutoForger.utils import GetDevice
+from pyTorchAutoForge.utils import GetDevice
 
 torch.set_grad_enabled(False)
 
