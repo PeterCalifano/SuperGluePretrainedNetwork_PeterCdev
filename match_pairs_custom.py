@@ -54,8 +54,18 @@ def DefineSuperPointSuperGlueModel():
             'match_threshold': match_threshold,
         }
     }
+    
+    model_extractor_matcher = Matching(config).eval()
+    
+    try:
+        print('Loading model to device... {device}'.format(device)) 
+        model_extractor_matcher = model_extractor_matcher.to(device)
 
-    model_extractor_matcher = Matching(config).eval().to(device)
+    except Exception as e:
+        print('Error moving model to device: {}'.format(e))
+        print('Defaulting to cpu device...')
+        model_extractor_matcher = model_extractor_matcher.to('cpu')
+        print('Model running on cpu device.')
 
     return model_extractor_matcher
 
