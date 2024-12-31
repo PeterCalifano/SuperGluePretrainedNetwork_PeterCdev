@@ -61,8 +61,9 @@ def DefineSuperPointSuperGlueModel():
         print('Loading model to device... {device}'.format(device)) 
         model_extractor_matcher = model_extractor_matcher.to(device)
 
-    except Exception as e:
-        print('Error moving model to device: {}'.format(e))
+    except Exception as exception:
+        print('Error moving model to device. Error message: {err}'.format(
+            err=exception))
         print('Defaulting to cpu device...')
         model_extractor_matcher = model_extractor_matcher.to('cpu')
         print('Model running on cpu device.')
