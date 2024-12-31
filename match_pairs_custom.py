@@ -13,8 +13,51 @@ from models.utils import (compute_pose_error, compute_epipolar_error,
                           error_colormap, AverageTimer, pose_auc, read_image,
                           rotate_intrinsics, rotate_pose_inplane,
                           scale_intrinsics)
+from pyTorchAutoForger.utils import GetDevice
 
 torch.set_grad_enabled(False)
+
+
+def DefineSuperPointSuperGlueModel():
+    """
+    DefineSuperPointSuperGlueModel _summary_
+
+    _extended_summary_
+
+    :return: _description_
+    :rtype: _type_
+    """
+    # Tuning settings
+    confidence_threshold = 0.7  # Adjust to filter weaker matches
+    nms_radius = 25
+    keypoint_threshold = 0.1
+    max_keypoints = -1
+    superglue = 'outdoor'
+    sinkhorn_iterations = 35
+    match_threshold = 0.35
+    resize_value = [512, 512]
+
+    # Get the device
+    device = GetDevice()
+    print('Running inference on device \"{}\"'.format(device))
+
+    # Load the SuperPoint and SuperGlue models
+    config = {
+        'superpoint': {
+            'nms_radius': nms_radius,
+            'keypoint_threshold': keypoint_threshold,
+            'max_keypoints': max_keypoints
+        },
+        'superglue': {
+            'weights': superglue,
+            'sinkhorn_iterations': sinkhorn_iterations,
+            'match_threshold': match_threshold,
+        }
+    }
+
+    model_extractor_matcher = Matching(config).eval().to(device)
+
+    return model_extractor_matcher
 
 
 def main():
@@ -35,35 +78,8 @@ def main():
     show_keypoints = True
     display_ocv = True
 
-    # Tuning settings
-    confidence_threshold = 0.7  # Adjust to filter weaker matches
-
-    nms_radius = 25
-    keypoint_threshold = 0.1
-    max_keypoints = -1
-    superglue = 'outdoor'
-    sinkhorn_iterations = 35
-    match_threshold = 0.35
-    resize_value = [512, 512]
-
-
-    # Load the SuperPoint and SuperGlue models.
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    print('Running inference on device \"{}\"'.format(device))
-    config = {
-        'superpoint': {
-            'nms_radius': nms_radius,
-            'keypoint_threshold': keypoint_threshold,
-            'max_keypoints': max_keypoints
-        },
-        'superglue': {
-            'weights': superglue,
-            'sinkhorn_iterations': sinkhorn_iterations,
-            'match_threshold': match_threshold,
-        }
-    }
-
-    model_extractor_matcher = Matching(config).eval().to(device)
+    # Load the SuperPoint and SuperGlue models
+    model_extractor_matcher = DefineSuperPointSuperGlueModel()
 
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
