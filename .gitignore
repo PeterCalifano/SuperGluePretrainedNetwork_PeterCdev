@@ -6,3 +6,4 @@ output*/
 *.txt
 .venv*/
 *.mp4
+*cache*/
