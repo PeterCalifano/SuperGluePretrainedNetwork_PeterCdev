@@ -18,7 +18,7 @@ from pyTorchAutoForge.utils import GetDevice
 torch.set_grad_enabled(False)
 
 
-def DefineSuperPointSuperGlueModel():
+def DefineSuperPointSuperGlueModel(device = None) -> torch.nn.Module:
     """
     DefineSuperPointSuperGlueModel _summary_
 
@@ -38,7 +38,8 @@ def DefineSuperPointSuperGlueModel():
     resize_value = [512, 512]
 
     # Get the device
-    device = GetDevice()
+    if device is None: 
+        device = GetDevice()
     print('Running inference on device \"{}\"'.format(device))
 
     # Load the SuperPoint and SuperGlue models
