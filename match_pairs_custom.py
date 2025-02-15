@@ -58,7 +58,7 @@ def DefineSuperPointSuperGlueModel():
     model_extractor_matcher = Matching(config).eval()
     
     try:
-        print('Loading model to device... {device}'.format(device)) 
+        print('Loading model to device... {device}'.format(device=device)) 
         model_extractor_matcher = model_extractor_matcher.to(device)
 
     except Exception as exception:
