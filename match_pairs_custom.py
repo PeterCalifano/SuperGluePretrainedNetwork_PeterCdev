@@ -13,7 +13,7 @@ from models.utils import (compute_pose_error, compute_epipolar_error,
                           error_colormap, AverageTimer, pose_auc, read_image,
                           rotate_intrinsics, rotate_pose_inplane,
                           scale_intrinsics)
-from pyTorchAutoForge.utils import GetDevice
+from pyTorchAutoForge.utils import GetDeviceMulti
 
 torch.set_grad_enabled(False)
 
@@ -75,6 +75,9 @@ def DefineSuperPointSuperGlueModel(device = None) -> torch.nn.Module:
 def main():
     # Change folder to the one containing the script
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+    device = GetDeviceMulti()
+    resize_value = [512, 512]  # Resize value for input images
 
     input_dir = Path("input_pairs")
     output_dir = Path("output_matches")

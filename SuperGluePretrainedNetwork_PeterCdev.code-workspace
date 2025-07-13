@@ -2,6 +2,12 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../accelerated_features_PeterCdev"
+		},
+		{
+			"path": "../LightGlue_PeterCdev"
 		}
 	],
 	"settings": {"python.defaultInterpreterPath": "../.venvML/bin/python"}
